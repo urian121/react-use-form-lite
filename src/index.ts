@@ -50,6 +50,9 @@ export function useForm(initialState: FormState = {}) {
         checked: boolean;
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     };
+    function register(key: string, options: { type: 'file' }): {
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    };
     function register(key: string, options?: { type?: 'text' }): {
         value: any;
         onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

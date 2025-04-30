@@ -6,18 +6,27 @@
 [![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
 
 
-🎯 Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sin dependencias adicionales.
+🎯 Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sin dependencias adicionales, ademas soporte para inputs, selects, radios, checkboxes, archivos y muchos más.
+
+
+## 🚀 Instalación
+
+```bash
+npm install react-use-form-lite
+```
 
 ## 📌 ¿Para Qué Fue Creado?
 
 `react-use-form-lite` fue creado para ofrecer una solución simple y reutilizable al manejo de formularios en aplicaciones React. El hook abstrae la lógica común de inputs, selects y checkboxes, permitiendo escribir formularios más limpios y con menos código repetido.
 
-## ❓ ¿Qué Necesidad Resuelve?
+## ⚡ ¿Qué Necesidad Resuelve?
 
-- El manejo de estado centralizado para múltiples campos de formulario.
-- La actualización dinámica de campos sin escribir múltiples `useState`.
-- La validación rápida de campos vacíos.
-- La asociación directa entre campos y sus props (`value`, `onChange`, etc.)
+- Manejo centralizado de valores del formulario
+- Inputs conectados automáticamente con `value`, `onChange`, `checked`
+- Validación de campos vacíos con `getEmptyFields()`
+- Reseteo inmediato con `resetForm()`
+- Soporte para inputs tipo: `text`, `checkbox`, `radio`, `select`, `file`
+
 
 ## ✅ Ventajas
 
@@ -40,53 +49,107 @@ npm install react-use-form-lite
 import { useForm } from 'react-use-form-lite';
 
 function App() {
+  // Inicializa el hook con todos los campos del formulario
   const { formData, register, resetForm, getEmptyFields } = useForm({
     nombre: '',
-    pais: '',
     edad: '',
     email: '',
     telefono: '',
     direccion: '',
-    aceptaTerminos: false,
+    password: '',
+    salario: '',
+    url: '',
+    buscar: '',
+    fechaNacimiento: '',
+    fechaHora: '',
+    hora: '',
+    semana: '',
+    mes: '',
+    rango: '',
+    color: '',
+    radio: '',
+    pais: '',
+    fotoPerfil: null,       // Para un solo archivo
+    archivoMultiple: null,  // Para múltiples archivos
+    aceptaTerminos: false
   });
 
   const handleSubmitForm = () => {
-    console.log('Datos del formulario:', formData);
+    // Muestra todos los datos del formulario en consola
+    console.log(formData);
 
+    // Identifica y muestra campos vacíos
     const emptyFields = getEmptyFields();
-    console.log('Campos vacíos:', emptyFields);
+    console.log(emptyFields);
+
+    // Accede al archivo único si fue cargado
+    if (formData.fotoPerfil) {
+      console.log('Archivo perfil:', formData.fotoPerfil.name);
+    }
+
+    // Recorre múltiples archivos si se subieron
+    if (Array.isArray(formData.documentosSoporte)) {
+      formData.documentosSoporte.forEach((file: File) =>
+        console.log('Documento soporte:', file.name)
+      );
+    }
   };
 
   return (
     <>
-      <input type="text" placeholder="Nombre" {...register('nombre')} />
-      <input type="text" placeholder="País" {...register('pais')} />
-      <input type="text" placeholder="Edad" {...register('edad')} />
-      <input type="text" placeholder="Email" {...register('email')} />
-      <input type="text" placeholder="Teléfono" {...register('telefono')} />
-      <input type="text" placeholder="Dirección" {...register('direccion')} />
+      <h1>Formulario de Registro</h1>
 
+      {/* Campos de texto */}
+      <input type="text" placeholder="Nombre" {...register('nombre')} />
+      <input type="text" placeholder="Edad" {...register('edad')} />
+      <input type="text" placeholder="Direccion" {...register('direccion')} />
+      <input type="password" placeholder="Contraseña" {...register('password')} />
+      <input type="email" placeholder="Email" {...register('email')} />
+      <input type="number" placeholder="Salario" {...register('salario')} />
+      <input type="tel" placeholder="Telefono" {...register('telefono')} />
+      <input type="url" placeholder="URL" {...register('url')} />
+      <input type="search" placeholder="Buscar" {...register('buscar')} />
+      <input type="date" placeholder="Fecha de nacimiento" {...register('fechaNacimiento')} />
+      <input type="datetime-local" placeholder="Fecha y hora" {...register('fechaHora')} />
+      <input type="time" placeholder="Hora" {...register('hora')} />
+      <input type="week" placeholder="Semana" {...register('semana')} />
+      <input type="month" placeholder="Mes" {...register('mes')} />
+      <input type="range" placeholder="Rango" {...register('rango')} />
+      <input type="color" placeholder="Color" {...register('color')} />
+
+      {/* Radios con diferentes opciones */}
+      <input type="radio" {...register('respuesta', { type: 'radio', value: 'si' })} />
+      <input type="radio" {...register('respuesta', { type: 'radio', value: 'no' })} />
+      <input type="radio" {...register('respuesta', { type: 'radio', value: 'tal vez' })} />
+      <input type="radio" {...register('respuesta', { type: 'radio', value: 'no se' })} />
+
+      {/* Select de país */}
       <select {...register('pais', { type: 'select' })}>
         <option value="">Seleccione un país</option>
         <option value="co">Colombia</option>
         <option value="mx">México</option>
       </select>
 
+      {/* Checkbox */}
       <label>
         <input type="checkbox" {...register('aceptaTerminos', { type: 'checkbox' })} />
         Acepto los términos
       </label>
 
-      <br />
+      {/* Archivos */}
+      <input type="file" {...register('fotoPerfil', { type: 'file' })} />
+      <input type="file" {...register('archivoMultiple', { type: 'file' })} multiple />
 
-      <button onClick={handleSubmitForm}>Enviar</button>
-      <button onClick={resetForm}>Resetear</button>
-      <button onClick={() => console.log(getEmptyFields())}>Validar</button>
+      {/* Botones de acción */}
+      <button type="submit" onClick={handleSubmitForm}>Enviar</button>
+      <button type="button" onClick={resetForm}>Resetear</button>
+      <button type="button" onClick={() => console.log(getEmptyFields())}>Validar</button>
     </>
-  );
+  )
 }
 
 export default App;
+
 ```
 ## ✅ Este ejemplo:
 
@@ -99,32 +162,35 @@ export default App;
 
 ## 📦 API del Hook
 
-| Función            | Descripción                                                |
-| ------------------ | ---------------------------------------------------------- |
-| `formData`         | Objeto con los valores actuales del formulario.            |
-| `resetForm()`      | Restaura el estado inicial del formulario.                 |
-| `register()`       | Devuelve props para conectar inputs, selects y checkboxes. |
-| `getEmptyFields()` | Devuelve los campos vacíos con un mensaje personalizado.   |
+| Hook                      | Descripción                                             |
+| ------------------------- | ------------------------------------------------------- |
+| `formData`                | Valores actuales del formulario                         |
+| `register(name, options)` | Conecta inputs con control automático (`type` opcional) |
+| `resetForm()`             | Reinicia el estado inicial                              |
+| `getEmptyFields()`        | Retorna campos vacíos con mensajes personalizados       |
+
 
 ## ✅ Tipos soportados por `register`
 
 - `text` (por defecto)
 - `select`
 - `checkbox`
+- `radio`
+- `file` (incluye `multiple`)
 
 
 ## 🤝 Únete y Contribuye
 
 Si encuentras algún problema o tienes una idea para mejorar el paquete, por favor abre un issue o envía un pull request
-en GitHub.
+en [GitHub](https://github.com/urian121/react-use-form-lite)
 
-## Desarrollado por
+## 👨‍💻 Aut
 
-- [Urian Viera](https://github.com/urian123)
-- [Portafolio](https://www.urianviera.com)
-- [Canal de Youtube](https://www.youtube.com/WebDeveloperUrianViera)
-- [¡Donar a través de PayPal!](https://www.paypal.com/donate/?hosted_button_id=4SV78MQJJH3VE)
-- [Email](mailto:urian1213viera@gmail.com)
+**Urian Viera**  
+🌐 [urianviera.com](https://www.urianviera.com)  
+📺 [YouTube](https://www.youtube.com/WebDeveloperUrianViera)  
+💌 [urian1213viera@gmail.com](mailto:urian1213viera@gmail.com)  
+☕ [¡Apóyame en PayPal!](https://www.paypal.com/donate/?hosted_button_id=4SV78MQJJH3VE)
 
 ## Copyright
 
