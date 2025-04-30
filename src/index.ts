@@ -49,7 +49,47 @@ export function useForm(initialState: FormState = {}) {
      * @returns Props que se deben propagar sobre el input correspondiente.
      */
 
-    const register = (key: string, options: RegisterOptions = {}) => {
+    // Overloads
+    function register(key: string, options: { type: 'checkbox' }): {
+        checked: boolean;
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    };
+    function register(key: string, options: { type: 'select' }): {
+        value: any;
+        onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    };
+    function register(key: string, options?: { type?: 'text' }): {
+        value: any;
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    };
+
+    // Implementación real
+    function register(key: string, options: RegisterOptions = {}) {
+        if (options.type === 'checkbox') {
+            return {
+                checked: formData[key] || false,
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(key, e.target.checked),
+            };
+        }
+
+        if (options.type === 'select') {
+            return {
+                value: formData[key] ?? '',
+                onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+                    onChange(key, e.target.value),
+            };
+        }
+
+        return {
+            value: formData[key] ?? '',
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                onChange(key, e.target.value),
+        };
+    }
+
+
+    /*const register = (key: string, options: RegisterOptions = {}) => {
         if (options.type === 'checkbox') {
             return {
                 checked: formData[key] || false,
@@ -72,7 +112,7 @@ export function useForm(initialState: FormState = {}) {
             onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                 onChange(key, e.target.value),
         };
-    };
+    };*/
 
     /**
      * Obtiene los campos vacíos del formulario.
