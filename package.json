@@ -1,0 +1,58 @@
+{
+  "name": "react-use-form-lite",
+  "description": "Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sencilla.",
+  "version": "1.0.0",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist"
+  },
+"peerDependencies": {
+  "react": "^18.0.0",
+  "react-dom": "^18.0.0"
+},
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.8.3",
+    "@types/react": "^19.1.2"
+  },
+  "keywords": [
+    "react",
+    "form",
+    "hook",
+    "react-use-form-lite",
+    "react-hook",
+    "react-hook-form",
+    "useForm",
+    "form-handling",
+    "react-forms",
+    "useForm-hook",
+    "form-state"
+  ],
+  "author": {
+    "name": "Urian Viera",
+    "email": "urianwebdeveloper@gmail.com",
+    "url": "https://www.urianviera.com"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/urian121/react-use-form-lite/issues",
+    "email": "urianwebdeveloper@gmail.com"
+  },
+  "homepage": "https://github.com/urian121/react-use-form-lite#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/urian121/react-use-form-lite.git"
+  }
+}
