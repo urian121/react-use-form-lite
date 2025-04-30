@@ -10,7 +10,7 @@ type FormState = Record<string, any>;
  * Permite definir el tipo de input para personalizar los handlers.
  */
 interface RegisterOptions {
-    type?: 'text' | 'select' | 'checkbox' | 'radio';
+    type?: 'text' | 'select' | 'checkbox' | 'radio' | 'file';
     value?: string;
 }
 
@@ -82,6 +82,22 @@ export function useForm(initialState: FormState = {}) {
                     onChange(key, e.target.value),
             };
         }
+
+        if (options.type === 'file') {
+            return {
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                    const files = e.target.files;
+                    if (!files) return;
+
+                    if (e.target.multiple) {
+                        onChange(key, Array.from(files)); // devuelve File[]
+                    } else {
+                        onChange(key, files[0]); // devuelve un solo File
+                    }
+                },
+            };
+        }
+
 
         return {
             value: formData[key] ?? '',
