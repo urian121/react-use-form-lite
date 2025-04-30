@@ -1,5 +1,12 @@
 # react-use-form-lite
 
+<div align="center">
+[![npm version](https://img.shields.io/npm/v/react-use-form-lite.svg?style=flat-square)](https://www.npmjs.com/package/react-use-form-lite)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/react-use-form-lite)
+[![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
+</div>
+
+
 🎯 Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sin dependencias adicionales.
 
 ## 📌 ¿Para Qué Fue Creado?
@@ -102,11 +109,12 @@ en GitHub: https://github.com/urian121/react-use-form-lite
 
 © 2025 Urian Viera. Todos los derechos reservados.
 
-## License
+## 🛡 License
 
-Licensed under MIT
+Licensed under [MIT](LICENSE)
 
-[![GitHub](https://img.shields.io/badge/GitHub-urian121/react-use-form-lite?logo=github&style=flat-square)](https://github.com/urian121/react-use-form-lite)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-urian121/react--use--form--lite-000?logo=github&style=flat-square)](https://github.com/urian121/react-use-form-lite)
+
 
 ## Agradecimientos
 
