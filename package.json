@@ -1,7 +1,7 @@
 {
   "name": "react-use-form-lite",
   "description": "Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sencilla.",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "files": [
