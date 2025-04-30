@@ -10,7 +10,8 @@ type FormState = Record<string, any>;
  * Permite definir el tipo de input para personalizar los handlers.
  */
 interface RegisterOptions {
-    type?: 'text' | 'select' | 'checkbox';
+    type?: 'text' | 'select' | 'checkbox' | 'radio';
+    value?: string;
 }
 
 /**
@@ -81,6 +82,17 @@ export function useForm(initialState: FormState = {}) {
             };
         }
 
+        if (options.type === 'radio') {
+            return {
+                name: key,
+                value: options.value,
+                checked: formData[key] === options.value,
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(key, e.target.value),
+            };
+        }
+
+
         return {
             value: formData[key] ?? '',
             onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
@@ -88,31 +100,6 @@ export function useForm(initialState: FormState = {}) {
         };
     }
 
-
-    /*const register = (key: string, options: RegisterOptions = {}) => {
-        if (options.type === 'checkbox') {
-            return {
-                checked: formData[key] || false,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                    onChange(key, e.target.checked),
-            };
-        }
-
-        if (options.type === 'select') {
-            return {
-                value: formData[key] ?? '',
-                onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
-                    onChange(key, e.target.value),
-            };
-        }
-
-        // default text input
-        return {
-            value: formData[key] ?? '',
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                onChange(key, e.target.value),
-        };
-    };*/
 
     /**
      * Obtiene los campos vacíos del formulario.
