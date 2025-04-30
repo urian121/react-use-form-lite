@@ -19,8 +19,8 @@
     "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist"
   },
   "peerDependencies": {
-    "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
   },
   "devDependencies": {
     "tsup": "^8.4.0",

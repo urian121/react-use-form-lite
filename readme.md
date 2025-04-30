@@ -1,10 +1,9 @@
 # react-use-form-lite
 
-<div align="center">
+
 [![npm version](https://img.shields.io/npm/v/react-use-form-lite.svg?style=flat-square)](https://www.npmjs.com/package/react-use-form-lite)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/react-use-form-lite)
 [![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
-</div>
 
 
 🎯 Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sin dependencias adicionales.
@@ -13,18 +12,14 @@
 
 `react-use-form-lite` fue creado para ofrecer una solución simple y reutilizable al manejo de formularios en aplicaciones React. El hook abstrae la lógica común de inputs, selects y checkboxes, permitiendo escribir formularios más limpios y con menos código repetido.
 
----
 
 ## ❓ ¿Qué Necesidad Resuelve?
-
-Este hook resuelve:
 
 - El manejo de estado centralizado para múltiples campos de formulario.
 - La actualización dinámica de campos sin escribir múltiples `useState`.
 - La validación rápida de campos vacíos.
 - La asociación directa entre campos y sus props (`value`, `onChange`, etc.)
 
----
 
 ## ✅ Ventajas
 
@@ -95,7 +90,7 @@ function MiFormulario() {
 ## 🤝 Únete y Contribuye
 
 Si encuentras algún problema o tienes una idea para mejorar el paquete, por favor abre un issue o envía un pull request
-en GitHub: https://github.com/urian121/react-use-form-lite
+en GitHub.
 
 ## Desarrollado por
 
@@ -118,4 +113,4 @@ Licensed under [MIT](LICENSE)
 
 ## Agradecimientos
 
-¡Gracias a todos los **Devs** 👨‍💻 que han utilizado y contribuido al desarrollo de **react use form lite**! Su apoyo y retroalimentación son fundamentales para mejorar continuamente este paquete.
+¡Gracias a todos los **Devs** 👨‍💻 que han utilizado y contribuido al desarrollo de **react-use-form-lite**! Su apoyo y retroalimentación son fundamentales para mejorar continuamente este paquete.
