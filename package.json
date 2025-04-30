@@ -1,7 +1,7 @@
 {
   "name": "react-use-form-lite",
   "description": "Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sencilla.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "types": "./dist/index.d.ts",
@@ -18,10 +18,10 @@
   "scripts": {
     "build": "tsup src/index.ts --dts --format esm,cjs --out-dir dist"
   },
-"peerDependencies": {
-  "react": "^18.0.0",
-  "react-dom": "^18.0.0"
-},
+  "peerDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
   "devDependencies": {
     "tsup": "^8.4.0",
     "typescript": "^5.8.3",
