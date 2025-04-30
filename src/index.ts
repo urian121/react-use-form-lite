@@ -35,21 +35,6 @@ export function useForm(initialState: FormState = {}) {
      */
     const resetForm = () => setFormData({ ...initialState });
 
-    /**
-     * Registra un campo del formulario y devuelve las propiedades adecuadas
-     * para vincularlo con un componente de formulario HTML estándar.
-     *
-     * El tipo de propiedades retornadas depende del tipo de campo especificado:
-     *
-     * - Para `type: 'text'` o no especificado: retorna `{ value, onChange }` para `<input type="text">`
-     * - Para `type: 'select'`: retorna `{ value, onChange }` para `<select>`
-     * - Para `type: 'checkbox'`: retorna `{ checked, onChange }` para `<input type="checkbox">`
-     *
-     * @param key Nombre del campo del formulario.
-     * @param options Opciones opcionales para especificar el tipo de input.
-     * @returns Props que se deben propagar sobre el input correspondiente.
-     */
-
     // Overloads
     function register(key: string, options: { type: 'checkbox' }): {
         checked: boolean;
@@ -58,6 +43,12 @@ export function useForm(initialState: FormState = {}) {
     function register(key: string, options: { type: 'select' }): {
         value: any;
         onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    };
+    function register(key: string, options: { type: 'radio'; value: string }): {
+        name: string;
+        value: string;
+        checked: boolean;
+        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     };
     function register(key: string, options?: { type?: 'text' }): {
         value: any;
@@ -85,13 +76,12 @@ export function useForm(initialState: FormState = {}) {
         if (options.type === 'radio') {
             return {
                 name: key,
-                value: options.value,
+                value: options.value!,
                 checked: formData[key] === options.value,
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     onChange(key, e.target.value),
             };
         }
-
 
         return {
             value: formData[key] ?? '',
@@ -99,7 +89,6 @@ export function useForm(initialState: FormState = {}) {
                 onChange(key, e.target.value),
         };
     }
-
 
     /**
      * Obtiene los campos vacíos del formulario.
