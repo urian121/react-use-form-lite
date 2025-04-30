@@ -35,23 +35,42 @@ export function useForm(initialState: FormState = {}) {
     const resetForm = () => setFormData({ ...initialState });
 
     /**
-     * Registra un campo en el formulario.
-     * Devuelve props compatibles con inputs HTML.
-     * @param key Nombre del campo.
-     * @param options Opciones adicionales (tipo de input).
+     * Registra un campo del formulario y devuelve las propiedades adecuadas
+     * para vincularlo con un componente de formulario HTML estándar.
+     *
+     * El tipo de propiedades retornadas depende del tipo de campo especificado:
+     *
+     * - Para `type: 'text'` o no especificado: retorna `{ value, onChange }` para `<input type="text">`
+     * - Para `type: 'select'`: retorna `{ value, onChange }` para `<select>`
+     * - Para `type: 'checkbox'`: retorna `{ checked, onChange }` para `<input type="checkbox">`
+     *
+     * @param key Nombre del campo del formulario.
+     * @param options Opciones opcionales para especificar el tipo de input.
+     * @returns Props que se deben propagar sobre el input correspondiente.
      */
+
     const register = (key: string, options: RegisterOptions = {}) => {
         if (options.type === 'checkbox') {
             return {
                 checked: formData[key] || false,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => onChange(key, e.target.checked),
+                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                    onChange(key, e.target.checked),
             };
         }
 
-        // text, select, etc.
+        if (options.type === 'select') {
+            return {
+                value: formData[key] ?? '',
+                onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
+                    onChange(key, e.target.value),
+            };
+        }
+
+        // default text input
         return {
             value: formData[key] ?? '',
-            onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => onChange(key, e.target.value),
+            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                onChange(key, e.target.value),
         };
     };
 
@@ -71,7 +90,6 @@ export function useForm(initialState: FormState = {}) {
 
     return {
         formData,
-        onChange,
         resetForm,
         register,
         getEmptyFields,

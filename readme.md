@@ -12,14 +12,12 @@
 
 `react-use-form-lite` fue creado para ofrecer una solución simple y reutilizable al manejo de formularios en aplicaciones React. El hook abstrae la lógica común de inputs, selects y checkboxes, permitiendo escribir formularios más limpios y con menos código repetido.
 
-
 ## ❓ ¿Qué Necesidad Resuelve?
 
 - El manejo de estado centralizado para múltiples campos de formulario.
 - La actualización dinámica de campos sin escribir múltiples `useState`.
 - La validación rápida de campos vacíos.
 - La asociación directa entre campos y sus props (`value`, `onChange`, etc.)
-
 
 ## ✅ Ventajas
 
@@ -41,17 +39,33 @@ npm install react-use-form-lite
 ```tsx
 import { useForm } from 'react-use-form-lite';
 
-function MiFormulario() {
-  const { formData, register, onChange, resetForm, getEmptyFields } = useForm({
+function App() {
+  const { formData, register, resetForm, getEmptyFields } = useForm({
     nombre: '',
     pais: '',
-    aceptaTerminos: false
+    edad: '',
+    email: '',
+    telefono: '',
+    direccion: '',
+    aceptaTerminos: false,
   });
 
+  const handleSubmitForm = () => {
+    console.log('Datos del formulario:', formData);
+
+    const emptyFields = getEmptyFields();
+    console.log('Campos vacíos:', emptyFields);
+  };
+
   return (
-    <form>
+    <>
       <input type="text" placeholder="Nombre" {...register('nombre')} />
-      
+      <input type="text" placeholder="País" {...register('pais')} />
+      <input type="text" placeholder="Edad" {...register('edad')} />
+      <input type="text" placeholder="Email" {...register('email')} />
+      <input type="text" placeholder="Teléfono" {...register('telefono')} />
+      <input type="text" placeholder="Dirección" {...register('direccion')} />
+
       <select {...register('pais', { type: 'select' })}>
         <option value="">Seleccione un país</option>
         <option value="co">Colombia</option>
@@ -63,19 +77,31 @@ function MiFormulario() {
         Acepto los términos
       </label>
 
-      <button type="button" onClick={() => console.log(getEmptyFields())}>Validar</button>
-      <button type="button" onClick={resetForm}>Resetear</button>
-    </form>
+      <br />
+
+      <button onClick={handleSubmitForm}>Enviar</button>
+      <button onClick={resetForm}>Resetear</button>
+      <button onClick={() => console.log(getEmptyFields())}>Validar</button>
+    </>
   );
 }
+
+export default App;
 ```
+## ✅ Este ejemplo:
+
+- Usa el `hook` `useForm` completo.
+
+- Valida y muestra campos vacíos.
+
+- Muestra los datos capturados con `formData`.
+
 
 ## 📦 API del Hook
 
 | Función            | Descripción                                                |
 | ------------------ | ---------------------------------------------------------- |
 | `formData`         | Objeto con los valores actuales del formulario.            |
-| `onChange`         | Función para actualizar un campo manualmente.              |
 | `resetForm()`      | Restaura el estado inicial del formulario.                 |
 | `register()`       | Devuelve props para conectar inputs, selects y checkboxes. |
 | `getEmptyFields()` | Devuelve los campos vacíos con un mensaje personalizado.   |
