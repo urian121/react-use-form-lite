@@ -36,13 +36,6 @@ npm install react-use-form-lite
 - ✅ Registro automático de `input`, `select` y `checkbox`.
 - ✅ Soporte para TypeScript con tipos incluidos.
 
-
-## 🚀 Instalación
-
-```bash
-npm install react-use-form-lite
-```
-
 ## ⚙️ Uso básico
 
 ```tsx

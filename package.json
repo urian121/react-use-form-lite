@@ -1,6 +1,6 @@
 {
   "name": "react-use-form-lite",
-  "description": "Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sencilla.",
+  "description": "Hook de formularios para React moderno: rápido, ligero, sin dependencias y compatible con TypeScript. Soporta inputs, selects, checkboxes, radios y archivos con validación simple.",
   "version": "1.11.0",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -29,16 +29,20 @@
   },
   "keywords": [
     "react",
-    "form",
-    "hook",
-    "react-use-form-lite",
-    "react-hook",
-    "react-hook-form",
+    "react hook",
     "useForm",
-    "form-handling",
-    "react-forms",
-    "useForm-hook",
-    "form-state"
+    "form hook",
+    "react form",
+    "form state",
+    "custom hook react",
+    "react use form",
+    "form management",
+    "lightweight react form",
+    "typescript form hook",
+    "react input handler",
+    "input binding react",
+    "checkbox radio select file form",
+    "react-use-form-lite"
   ],
   "author": {
     "name": "Urian Viera",
