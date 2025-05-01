@@ -61,12 +61,36 @@ export function useFormLite(initialState: FormState = {}) {
     // Implementación real
     function register(key: string, options: RegisterOptions = {}) {
         if (options.type === 'checkbox') {
+            const value = options.value;
+            if (value !== undefined) {
+                // Checkbox múltiple (grupo)
+                const currentValues: string[] = formData[key] || [];
+                return {
+                    checked: currentValues.includes(value),
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
+                        const newValues = e.target.checked
+                            ? [...currentValues, value]
+                            : currentValues.filter((v) => v !== value);
+                        onChange(key, newValues);
+                    },
+                };
+            } else {
+                // Checkbox único (booleano)
+                return {
+                    checked: formData[key] || false,
+                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
+                        onChange(key, e.target.checked),
+                };
+            }
+        }
+
+        /*if (options.type === 'checkbox') {
             return {
                 checked: formData[key] || false,
                 onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
                     onChange(key, e.target.checked),
             };
-        }
+        }*/
 
         if (options.type === 'select') {
             return {

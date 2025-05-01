@@ -57,8 +57,8 @@ export default function App() {
     range: '',
     pais: '',
     fecha_actual: '',
-    aceptaTerminos: '',
-    teGustaReact: '',
+    aceptaTerminos: true,
+    teGustaReact: false,
     fotoPerfil: null,
   }
 
@@ -138,8 +138,8 @@ export default function App() {
           <div className="form-group">
             <label>¿Aceptar términos?</label>
             <div className="radio-group">
-              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'si' })} /> Sí</label>
-              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'no' })} /> No</label>
+              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'Sí' })} /> Sí</label>
+              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'No' })} /> No</label>
             </div>
           </div>
 
@@ -194,6 +194,15 @@ export default function App() {
 - `checkbox`
 - `radio`
 - `file` (incluye `multiple`)
+
+
+> 💡 **Nota:** También puedes capturar múltiples checkboxes usando el mismo nombre de campo. Por ejemplo:
+> ```jsx
+> <input type="checkbox" value="HTML" {...register('lenguajes', { type: 'checkbox' })} />
+> <input type="checkbox" value="CSS" {...register('lenguajes', { type: 'checkbox' })} />
+> <input type="checkbox" value="JavaScript" {...register('lenguajes', { type: 'checkbox' })} />
+> ```
+> Esto generará un array con los valores seleccionados: `formData.lenguajes = ['HTML', 'CSS']`
 
 
 ## 🤝 Únete y Contribuye
