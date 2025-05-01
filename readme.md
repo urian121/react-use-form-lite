@@ -9,10 +9,16 @@
 🎯 Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sin dependencias adicionales, ademas soporte para inputs, selects, radios, checkboxes, archivos y muchos más.
 
 
+![Vista previa](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/react-use-form-lite.gif)
+
+👉 [Ver Código en GitHub](https://github.com/urian121/react-use-form-lite)
+
 ## 🚀 Instalación
 
 ```bash
-npm install react-use-form-lite
+$ npm install react-use-form-lite
+
+$ yarn add nextjs-toast-notify
 ```
 
 ## 📌 ¿Para Qué Fue Creado?
@@ -42,101 +48,116 @@ npm install react-use-form-lite
 import { useForm } from 'react-use-form-lite';
 
 function App() {
-  // Inicializa el hook con todos los campos del formulario
-  const { formData, register, resetForm, getEmptyFields } = useForm({
+
+  // Definir un objeto con los campos del formulario
+  const camposForm = {
     nombre: '',
     edad: '',
     email: '',
-    telefono: '',
-    direccion: '',
-    password: '',
-    salario: '',
-    url: '',
-    buscar: '',
-    fechaNacimiento: '',
-    fechaHora: '',
-    hora: '',
-    semana: '',
-    mes: '',
-    rango: '',
-    color: '',
-    radio: '',
+    range: '',
     pais: '',
-    fotoPerfil: null,       // Para un solo archivo
-    archivoMultiple: null,  // Para múltiples archivos
-    aceptaTerminos: false
-  });
+    fecha_actual: '',
+    aceptaTerminos: '',
+    teGustaReact: '',
+    fotoPerfil: null,
+  }
+
+  // Inicializa el hook con todos los campos del formulario
+  const { formData, register, resetForm, getEmptyFields } = useForm({camposForm});
 
   const handleSubmitForm = () => {
+    
     // Muestra todos los datos del formulario en consola
-    console.log(formData);
+    console.log(`Datos del formulario:, ${formData}`);
 
-    // Identifica y muestra campos vacíos
-    const emptyFields = getEmptyFields();
-    console.log(emptyFields);
+    // Muestra todos los campos vacíos
+    console.log(`Campos vacíos:, ${getEmptyFields()}`);
 
-    // Accede al archivo único si fue cargado
+    // verificar si el archivo fue cargado
     if (formData.fotoPerfil) {
-      console.log('Archivo perfil:', formData.fotoPerfil.name);
+      console.log(`Archivo ${formData.fotoPerfil.name}`);
     }
 
-    // Recorre múltiples archivos si se subieron
-    if (Array.isArray(formData.documentosSoporte)) {
-      formData.documentosSoporte.forEach((file: File) =>
-        console.log('Documento soporte:', file.name)
-      );
-    }
-  };
+    /**
+     * Para inputs con `multiple`, como:
+     * <input type="file" {...register('multipleDocumentos', { type: 'file' })} multiple />
+     * asegúrate de declarar `multipleDocumentos` en `camposForm`.
+     * Puedes recorrer los archivos con:
+     * formData.multipleDocumentos.forEach((file) => console.log(`Archivos cargados: ${file.name}`));
+    */
+    
+};
 
   return (
     <>
-      <h1>Formulario de Registro</h1>
+        <h1>Campos del formulario</h1>
 
-      {/* Campos de texto */}
-      <input type="text" placeholder="Nombre" {...register('nombre')} />
-      <input type="text" placeholder="Edad" {...register('edad')} />
-      <input type="text" placeholder="Direccion" {...register('direccion')} />
-      <input type="password" placeholder="Contraseña" {...register('password')} />
-      <input type="email" placeholder="Email" {...register('email')} />
-      <input type="number" placeholder="Salario" {...register('salario')} />
-      <input type="tel" placeholder="Telefono" {...register('telefono')} />
-      <input type="url" placeholder="URL" {...register('url')} />
-      <input type="search" placeholder="Buscar" {...register('buscar')} />
-      <input type="date" placeholder="Fecha de nacimiento" {...register('fechaNacimiento')} />
-      <input type="datetime-local" placeholder="Fecha y hora" {...register('fechaHora')} />
-      <input type="time" placeholder="Hora" {...register('hora')} />
-      <input type="week" placeholder="Semana" {...register('semana')} />
-      <input type="month" placeholder="Mes" {...register('mes')} />
-      <input type="range" placeholder="Rango" {...register('rango')} />
-      <input type="color" placeholder="Color" {...register('color')} />
+          {/* Text */}
+          <div className="form-group">
+            <label htmlFor="nombre">Nombre</label>
+            <input type='text' {...register('nombre')} />
+          </div>
 
-      {/* Radios con diferentes opciones */}
-      <input type="radio" {...register('respuesta', { type: 'radio', value: 'si' })} />
-      <input type="radio" {...register('respuesta', { type: 'radio', value: 'no' })} />
-      <input type="radio" {...register('respuesta', { type: 'radio', value: 'tal vez' })} />
-      <input type="radio" {...register('respuesta', { type: 'radio', value: 'no se' })} />
+          {/* Number */}
+          <div className="form-group">
+            <label htmlFor="Edad">Edad</label>
+            <input type='number' {...register('edad')} />
+          </div>
 
-      {/* Select de país */}
-      <select {...register('pais', { type: 'select' })}>
-        <option value="">Seleccione un país</option>
-        <option value="co">Colombia</option>
-        <option value="mx">México</option>
-      </select>
+        {/* Email */}
+          <div className="form-group">
+            <label htmlFor="Email">Email</label>
+            <input type="email" {...register('email')} />
+          </div>
 
-      {/* Checkbox */}
-      <label>
-        <input type="checkbox" {...register('aceptaTerminos', { type: 'checkbox' })} />
-        Acepto los términos
-      </label>
+          {/* Range */}
+          <div className="form-group">
+            <label htmlFor="range">Rango</label>
+            <input type="range" {...register('range')} />
+          </div>
 
-      {/* Archivos */}
-      <input type="file" {...register('fotoPerfil', { type: 'file' })} />
-      <input type="file" {...register('archivoMultiple', { type: 'file' })} multiple />
+          {/* Select */}
+          <div className="form-group">
+            <label>País</label>
+            <select name="pais" {...register('pais', { type: 'select' })}>
+              <option value="">Seleccione un país</option>
+              <option value="Colombia">Colombia</option>
+              <option value="México">México</option>
+              <option value="Venezuela">Venezuela</option>
+            </select>
+          </div>
 
-      {/* Botones de acción */}
-      <button type="submit" onClick={handleSubmitForm}>Enviar</button>
-      <button type="button" onClick={resetForm}>Resetear</button>
-      <button type="button" onClick={() => console.log(getEmptyFields())}>Validar</button>
+          {/* Date */}
+          <div className="form-group">
+            <label htmlFor="fecha">Fecha actual</label>
+            <input type="date" {...register('fecha_actual')} />
+          </div>
+
+        {/* Radios */}
+          <div className="form-group">
+            <label>¿Aceptar términos?</label>
+            <div className="radio-group">
+              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'si' })} /> Sí</label>
+              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'no' })} /> No</label>
+            </div>
+          </div>
+
+          {/* Checkbox */}
+          <div className="form-group">
+            <label>¿Te gusta React?</label>
+            <label><input type="checkbox" {...register('teGustaReact', { type: 'checkbox' })} /> Sí</label>
+          </div>
+
+          {/* Archivo */}
+          <div className="form-group">
+            <label>Foto de perfil</label>
+            <input type="file" {...register('fotoPerfil', { type: 'file' })} />
+          </div>
+
+          {/* Botones de acción */}
+          <button type="submit" onClick={handleSubmitForm}>Enviar formulario</button>
+          <button type="button" onClick={resetForm}>Limpiar formulario</button>
+        </div>
     </>
   )
 }
