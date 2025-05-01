@@ -18,7 +18,7 @@ interface RegisterOptions {
  * Custom hook para manejar formularios en React.
  * @param initialState Estado inicial del formulario.
  */
-export function useForm(initialState: FormState = {}) {
+export function useFormLite(initialState: FormState = {}) {
     const [formData, setFormData] = useState<FormState>({ ...initialState });
 
     /**

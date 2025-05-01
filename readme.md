@@ -1,17 +1,17 @@
 # react-use-form-lite
 
-
 [![npm version](https://img.shields.io/npm/v/react-use-form-lite.svg?style=flat-square)](https://www.npmjs.com/package/react-use-form-lite)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-repository-blue?style=flat-square&logo=github)](https://github.com/urian121/react-use-form-lite)
 [![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
 
 
-🎯 Un Custom Hook simple, liviano y flexible para manejar formularios en React de forma rápida y sin dependencias adicionales, ademas soporte para inputs, selects, radios, checkboxes, archivos y muchos más.
+🎯 Un **Custom Hook** moderno, intuitivo, liviano y flexible para manejar formularios en React sin dependencias adicionales.
+Permite una implementación rápida y sin complicaciones, con soporte para inputs, selects, radios, checkboxes, archivos ¡y mucho más!
 
 
 ![Vista previa](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/react-use-form-lite.gif)
 
-👉 [Ver Código en GitHub](https://github.com/urian121/react-use-form-lite)
+👉 [Ver Código en GitHub](https://github.com/urian121/app-with-react-use-form-lite)
 
 ## 🚀 Instalación
 
@@ -23,33 +23,33 @@ $ yarn add nextjs-toast-notify
 
 ## 📌 ¿Para Qué Fue Creado?
 
-`react-use-form-lite` fue creado para ofrecer una solución simple y reutilizable al manejo de formularios en aplicaciones React. El hook abstrae la lógica común de inputs, selects y checkboxes, permitiendo escribir formularios más limpios y con menos código repetido.
+**`react-use-form-lite`** fue creado para ofrecer una solución simple, flexible y reutilizable al manejo de formularios en aplicaciones React. El hook abstrae la lógica común de inputs, selects y checkboxes, permitiendo escribir formularios más limpios y con menos código repetido.
 
 ## ⚡ ¿Qué Necesidad Resuelve?
 
 - Manejo centralizado de valores del formulario
 - Inputs conectados automáticamente con `value`, `onChange`, `checked`
 - Validación de campos vacíos con `getEmptyFields()`
-- Reseteo inmediato con `resetForm()`
-- Soporte para inputs tipo: `text`, `checkbox`, `radio`, `select`, `file`
+- Reseteo del formulario con `resetForm()`
+- Soporte para inputs tipo: `text`, `checkbox`, `radio`, `select`, `file` y muchos más.
 
 
 ## ✅ Ventajas
 
 - ✅ Sin dependencias externas.
-- ✅ Compatible con React 18+.
-- ✅ Ligero y optimizado para librerías.
+- ✅ Ligero, rapido y optimizado para librerías.
 - ✅ Registro automático de `input`, `select` y `checkbox`.
 - ✅ Soporte para TypeScript con tipos incluidos.
 
 ## ⚙️ Uso básico
 
 ```tsx
-import { useForm } from 'react-use-form-lite';
+import { useFormLite } from 'react-use-form-lite';
 
-function App() {
+// Componente principal
+export default function App() {
 
-  // Definir un objeto con los campos del formulario
+  // Definir un objeto con los campos del formulario y sus valores iniciales
   const camposForm = {
     nombre: '',
     edad: '',
@@ -63,8 +63,9 @@ function App() {
   }
 
   // Inicializa el hook con todos los campos del formulario
-  const { formData, register, resetForm, getEmptyFields } = useForm({camposForm});
+  const { formData, register, resetForm, getEmptyFields } = useFormLite(camposForm);
 
+  // Función para manejar el envío del formulario
   const handleSubmitForm = () => {
     
     // Muestra todos los datos del formulario en consola
@@ -162,26 +163,28 @@ function App() {
   )
 }
 
-export default App;
-
 ```
 ## ✅ Este ejemplo:
 
-- Usa el `hook` `useForm` completo.
+- Usa el `hook` `useFormLite` completo.
 
 - Valida y muestra campos vacíos.
 
 - Muestra los datos capturados con `formData`.
 
+- Boton que llama a `resetForm()` para limpiar el formulario.
+
+- Boton que llama a `handleSubmitForm()` para enviar el formulario.
+
 
 ## 📦 API del Hook
 
-| Hook                      | Descripción                                             |
-| ------------------------- | ------------------------------------------------------- |
-| `formData`                | Valores actuales del formulario                         |
-| `register(name, options)` | Conecta inputs con control automático (`type` opcional) |
-| `resetForm()`             | Reinicia el estado inicial                              |
-| `getEmptyFields()`        | Retorna campos vacíos con mensajes personalizados       |
+| Hook                      | Descripción                                                                                                       |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------|
+| `formData`                | Objeto donde cada clave es el nombre de un campo del formulario, y su valor es el dato ingresado por el usuario.
+| `register(name, options)` | Función para conectar inputs con control automático (`type` opcional)                                             |
+| `resetForm()`             | Función para reiniciar el estado inicial del formulario                                                           |
+| `getEmptyFields()`        | Función que retorna un objeto con campos vacíos  del formulario                                                   |
 
 
 ## ✅ Tipos soportados por `register`
