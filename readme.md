@@ -196,7 +196,6 @@ export default function App() {
 - `file` (incluye `multiple`)
 
 
-> [!IMPORTANT]
 > 💡 **Nota:** También puedes capturar múltiples checkboxes usando el mismo nombre de campo. Por ejemplo:
 > ```jsx
 > <input type="checkbox" value="HTML" {...register('lenguajes', { type: 'checkbox' })} />
