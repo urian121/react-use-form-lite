@@ -84,14 +84,6 @@ export function useFormLite(initialState: FormState = {}) {
             }
         }
 
-        /*if (options.type === 'checkbox') {
-            return {
-                checked: formData[key] || false,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                    onChange(key, e.target.checked),
-            };
-        }*/
-
         if (options.type === 'select') {
             return {
                 value: formData[key] ?? '',

@@ -54,7 +54,7 @@ export default function App() {
     nombre: '',
     edad: '',
     email: '',
-    range: '',
+    range: '25',
     pais: '',
     fecha_actual: '',
     aceptaTerminos: true,
@@ -196,6 +196,7 @@ export default function App() {
 - `file` (incluye `multiple`)
 
 
+> [!IMPORTANT]
 > 💡 **Nota:** También puedes capturar múltiples checkboxes usando el mismo nombre de campo. Por ejemplo:
 > ```jsx
 > <input type="checkbox" value="HTML" {...register('lenguajes', { type: 'checkbox' })} />
@@ -210,7 +211,7 @@ export default function App() {
 Si encuentras algún problema o tienes una idea para mejorar el paquete, por favor abre un issue o envía un pull request
 en [GitHub](https://github.com/urian121/react-use-form-lite)
 
-## 👨‍💻 Aut
+## 👨‍💻 Desarrollador
 
 **Urian Viera**  
 🌐 [urianviera.com](https://www.urianviera.com)  
