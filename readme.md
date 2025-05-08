@@ -5,9 +5,8 @@
 [![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
 
 
-🎯 Un **Custom Hook** moderno, intuitivo, liviano y flexible para manejar formularios en React sin dependencias adicionales.
-Permite una implementación rápida y sin complicaciones, con soporte para inputs, selects, radios, checkboxes, archivos ¡y mucho más!
-
+Es una librería moderna, intuitiva, liviana, escalable y sobre todo flexible flexible para manejar formularios en **React** sin dependencias adicionales.
+Permite una implementación rápida y sin complicaciones, con soporte para inputs, textarea, selects, radios, checkboxes, archivos ¡y mucho más!
 
 ![Vista previa](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/react-use-form-lite.gif)
 
@@ -23,7 +22,8 @@ $ yarn add nextjs-toast-notify
 
 ## 📌 ¿Para Qué Fue Creado?
 
-**`react-use-form-lite`** fue creado para ofrecer una solución simple, flexible y reutilizable al manejo de formularios en aplicaciones React. El hook abstrae la lógica común de inputs, selects y checkboxes, permitiendo escribir formularios más limpios y con menos código repetido.
+**`react-use-form-lite`** fue creado para ofrecer una solución simple, flexible y reutilizable al manejo de formularios en aplicaciones **React**.
+El hook abstrae la lógica común de inputs, selects, checkboxes, etc, permitiendo escribir formularios más limpios y con menos código repetido.
 
 ## ⚡ ¿Qué Necesidad Resuelve?
 
@@ -62,7 +62,7 @@ export default function App() {
     fotoPerfil: null,
   }
 
-  // Inicializa el hook con todos los campos del formulario
+  // Usa el hook useFormLite para manejar el estado y eventos del formulario de manera centralizada
   const { formData, register, resetForm, getEmptyFields } = useFormLite(camposForm);
 
   // Función para manejar el envío del formulario
@@ -224,11 +224,11 @@ en [GitHub](https://github.com/urian121/react-use-form-lite)
 
 ## 🛡 License
 
-Licensed under [MIT](LICENSE)
+Distribuido bajo la licencia [MIT](LICENSE)
 
 [![GitHub Repo](https://img.shields.io/badge/GitHub-urian121/react--use--form--lite-000?logo=github&style=flat-square)](https://github.com/urian121/react-use-form-lite)
 
 
-## Agradecimientos
+## 🙌 Agradecimientos
 
 ¡Gracias a todos los **Devs** 👨‍💻 que han utilizado y contribuido al desarrollo de **react-use-form-lite**! Su apoyo y retroalimentación son fundamentales para mejorar continuamente este paquete.
