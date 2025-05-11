@@ -5,8 +5,8 @@
 [![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
 
 
-Es una librería moderna, intuitiva, liviana, escalable y sobre todo flexible flexible para manejar formularios en **React** sin dependencias adicionales.
-Permite una implementación rápida y sin complicaciones, con soporte para inputs, textarea, selects, radios, checkboxes, archivos ¡y mucho más!
+Es una librería moderna, intuitiva, liviana, escalable y sobre todo flexible para manejar formularios en **React** sin dependencias adicionales.
+Permite una implementación rápida y sin complicaciones, con soporte para múltiples tipos de input (`text`, `number`, `email`, `textarea`, `date`, `range`, `select`, `radio`, `checkbox`, `file`) ¡y mucho más!
 
 ![Vista previa](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/react-use-form-lite.gif)
 
@@ -16,19 +16,19 @@ Permite una implementación rápida y sin complicaciones, con soporte para input
 
 ```bash
 $ npm install react-use-form-lite
-
+or
 $ yarn add nextjs-toast-notify
 ```
 
-## 📌 ¿Para Qué Fue Creado?
+## 🤔 ¿Para Qué Fue Creado?
 
 **`react-use-form-lite`** fue creado para ofrecer una solución simple, flexible y reutilizable al manejo de formularios en aplicaciones **React**.
-El hook abstrae la lógica común de inputs, selects, checkboxes, etc, permitiendo escribir formularios más limpios y con menos código repetido.
+El hook abstrae la lógica común de *inputs, selects, checkboxes, etc*, permitiendo escribir formularios más limpios y con menos código repetido.
 
 ## ⚡ ¿Qué Necesidad Resuelve?
 
 - Manejo centralizado de valores del formulario
-- Inputs conectados automáticamente con `value`, `onChange`, `checked`
+- Inputs conectados automáticamente con `value`, `onChange`, `checked`,
 - Validación de campos vacíos con `getEmptyFields()`
 - Reseteo del formulario con `resetForm()`
 - Soporte para inputs tipo: `text`, `checkbox`, `radio`, `select`, `file` y muchos más.
@@ -38,12 +38,13 @@ El hook abstrae la lógica común de inputs, selects, checkboxes, etc, permitien
 
 - ✅ Sin dependencias externas.
 - ✅ Ligero, rapido y optimizado para librerías.
-- ✅ Registro automático de `input`, `select` y `checkbox`.
-- ✅ Soporte para TypeScript con tipos incluidos.
+- ✅ Validación de campos vacíos.
+- ✅ Reseteo del formulario.
 
 ## ⚙️ Uso básico
 
 ```tsx
+// Importar la librería luego de instalarla
 import { useFormLite } from 'react-use-form-lite';
 
 // Componente principal
@@ -80,9 +81,9 @@ export default function App() {
     }
 
     /**
-     * Para inputs con `multiple`, como:
+     * Para inputs de tipo `file` con el atributo `multiple`:
      * <input type="file" {...register('multipleDocumentos', { type: 'file' })} multiple />
-     * asegúrate de declarar `multipleDocumentos` en `camposForm`.
+     * Asegúrate de declarar `multipleDocumentos` en `camposForm`.
      * Puedes recorrer los archivos con:
      * formData.multipleDocumentos.forEach((file) => console.log(`Archivos cargados: ${file.name}`));
     */
@@ -93,91 +94,67 @@ export default function App() {
     <>
         <h1>Campos del formulario</h1>
 
-          {/* Text */}
-          <div className="form-group">
-            <label htmlFor="nombre">Nombre</label>
-            <input type='text' {...register('nombre')} />
-          </div>
+          {/* Input tipo Text */}
+          <input type='text' {...register('nombre')} placeholder='Escribe tu nombre' />
 
-          {/* Number */}
-          <div className="form-group">
-            <label htmlFor="Edad">Edad</label>
-            <input type='number' {...register('edad')} />
-          </div>
+          {/* Input tipo Number */}
+          <input type='number' {...register('edad')}  placeholder='Escribe tu edad' />
 
-        {/* Email */}
-          <div className="form-group">
-            <label htmlFor="Email">Email</label>
-            <input type="email" {...register('email')} />
-          </div>
+          {/* Input tipo Email */}
+          <input type="email" {...register('email')} placeholder='Escribe tu email' />
 
-          {/* Range */}
-          <div className="form-group">
-            <label htmlFor="range">Rango</label>
-            <input type="range" {...register('range')} />
-          </div>
+          {/* Input tipo Range */}
+          <input type="range" {...register('range')} />
 
-          {/* Select */}
-          <div className="form-group">
-            <label>País</label>
-            <select name="pais" {...register('pais', { type: 'select' })}>
-              <option value="">Seleccione un país</option>
-              <option value="Colombia">Colombia</option>
-              <option value="México">México</option>
-              <option value="Venezuela">Venezuela</option>
-            </select>
-          </div>
+          {/* Input tipo Select */}
+          <select name="pais" {...register('pais', { type: 'select' })}>
+            <option value="">Seleccione un país</option>
+            <option value="Colombia">Colombia</option>
+            <option value="México">México</option>
+            <option value="Venezuela">Venezuela</option>
+          </select>
 
-          {/* Date */}
-          <div className="form-group">
-            <label htmlFor="fecha">Fecha actual</label>
-            <input type="date" {...register('fecha_actual')} />
-          </div>
+          {/* Input tipo Date */}
+          <input type="date" {...register('fecha_actual')} placeholder='Seleccione una fecha' />
 
-        {/* Radios */}
-          <div className="form-group">
-            <label>¿Aceptar términos?</label>
-            <div className="radio-group">
-              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'Sí' })} /> Sí</label>
-              <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'No' })} /> No</label>
-            </div>
-          </div>
+          {/* Input tipo Radio */}
+          <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'Sí' })} /> Sí</label>
+          <label><input type="radio" {...register('aceptaTerminos', { type: 'radio', value: 'No' })} /> No</label>
 
-          {/* Checkbox */}
-          <div className="form-group">
-            <label>¿Te gusta React?</label>
-            <label><input type="checkbox" {...register('teGustaReact', { type: 'checkbox' })} /> Sí</label>
-          </div>
+          {/* Input tipo Checkbox */}
+          <label><input type="checkbox" {...register('teGustaReact', { type: 'checkbox' })} /> Sí</label>
 
-          {/* Archivo */}
-          <div className="form-group">
-            <label>Foto de perfil</label>
-            <input type="file" {...register('fotoPerfil', { type: 'file' })} />
-          </div>
+          {/* Input tipo file */}
+          <input type="file" {...register('fotoPerfil', { type: 'file' })} />
 
           {/* Botones de acción */}
           <button type="submit" onClick={handleSubmitForm}>Enviar formulario</button>
           <button type="button" onClick={resetForm}>Limpiar formulario</button>
-        </div>
     </>
   )
 }
 
 ```
-## ✅ Este ejemplo:
+### ✅ Ejemplo anterior
 
-- Usa el `hook` `useFormLite` completo.
+- Define un formulario con campos de diferentes tipos y atributos.
+
+- Usa el hook `useFormLite` para manejar el estado y eventos del formulario de manera centralizada.
+
+- Usa el hook `register` para conectar inputs con control automático (`type` opcional).
+
+- Usa `getEmptyFields()` para obtener campos vacíos.
+
+- Usa `resetForm()` para reiniciar el estado inicial del formulario.
+
+- Usa `handleSubmitForm()` para enviar el formulario.
 
 - Valida y muestra campos vacíos.
 
 - Muestra los datos capturados con `formData`.
 
-- Boton que llama a `resetForm()` para limpiar el formulario.
 
-- Boton que llama a `handleSubmitForm()` para enviar el formulario.
-
-
-## 📦 API del Hook
+## 📦 API del Hook `react-use-form-lite`
 
 | Hook                      | Descripción                                                                                                       |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------|
@@ -190,20 +167,26 @@ export default function App() {
 ## ✅ Tipos soportados por `register`
 
 - `text` (por defecto)
+- `number`
+- `email`
+- `range`
+- `date`
 - `select`
 - `checkbox`
 - `radio`
 - `file` (incluye `multiple`)
 
-
-> 💡 **Nota:** También puedes capturar múltiples checkboxes usando el mismo nombre de campo. Por ejemplo:
+> 💡 **Nota importante:**  
+> Puedes capturar múltiples checkboxes usando el mismo nombre de campo (`lenguajes`). Esto es útil para obtener un **array con los valores seleccionados**.
+>
+> **Ejemplo:**
 > ```jsx
 > <input type="checkbox" value="HTML" {...register('lenguajes', { type: 'checkbox' })} />
 > <input type="checkbox" value="CSS" {...register('lenguajes', { type: 'checkbox' })} />
 > <input type="checkbox" value="JavaScript" {...register('lenguajes', { type: 'checkbox' })} />
 > ```
-> Esto generará un array con los valores seleccionados: `formData.lenguajes = ['HTML', 'CSS']`
-
+> ✅ Resultado si el usuario selecciona HTML y CSS:  
+> `formData.lenguajes = ['HTML', 'CSS']`
 
 ## 🤝 Únete y Contribuye
 
