@@ -20,6 +20,25 @@ or
 $ yarn add react-use-form-lite
 ```
 
+> 💡 **Nota importante sobre `register`:**  
+> El hook `register` conecta automáticamente los campos del formulario con el estado interno, simplificando el manejo de sus valores y eventos.
+>
+> - Para inputs como `text`, `number`, `email`, `date` o `range`, **no es necesario definir el tipo**, ya que se infiere automáticamente.
+> - Para inputs como `select`, `radio`, `checkbox` y `file`, **es obligatorio especificar el tipo** usando la opción `{ type: '...' }` en `register`, para que el hook pueda manejar correctamente sus valores.
+>
+> **Ejemplo:**
+>
+> ```jsx
+> // No requiere 'type'
+> <input type="text" {...register('nombre')} />
+>
+> // Requiere 'type'
+> <select {...register('pais', { type: 'select' })}>...</select>
+> <input type="radio" {...register('acepta', { type: 'radio', value: 'sí' })} />
+> <input type="checkbox" {...register('suscrito', { type: 'checkbox' })} />
+> <input type="file" {...register('archivo', { type: 'file' })} />
+> ```
+
 ## 🤔 ¿Para Qué Fue Creado?
 
 **`react-use-form-lite`** fue creado para ofrecer una solución simple, flexible y reutilizable al manejo de formularios en aplicaciones **React**.
@@ -107,7 +126,7 @@ export default function App() {
           <input type="range" {...register('range')} />
 
           {/* Input tipo Select */}
-          <select name="pais" {...register('pais', { type: 'select' })}>
+          <select {...register('pais', { type: 'select' })}>
             <option value="">Seleccione un país</option>
             <option value="Colombia">Colombia</option>
             <option value="México">México</option>
@@ -128,8 +147,8 @@ export default function App() {
           <input type="file" {...register('fotoPerfil', { type: 'file' })} />
 
           {/* Botones de acción */}
-          <button type="submit" onClick={handleSubmitForm}>Enviar formulario</button>
-          <button type="button" onClick={resetForm}>Limpiar formulario</button>
+          <button onClick={handleSubmitForm}>Enviar formulario</button>
+          <button onClick={resetForm}>Limpiar formulario</button>
     </>
   )
 }
