@@ -17,7 +17,7 @@ Permite una implementación rápida y sin complicaciones, con soporte para múlt
 ```bash
 $ npm install react-use-form-lite
 or
-$ yarn add nextjs-toast-notify
+$ yarn add react-use-form-lite
 ```
 
 ## 🤔 ¿Para Qué Fue Creado?
@@ -138,21 +138,13 @@ export default function App() {
 ### ✅ Ejemplo anterior
 
 - Define un formulario con campos de diferentes tipos y atributos.
-
 - Usa el hook `useFormLite` para manejar el estado y eventos del formulario de manera centralizada.
-
 - Usa el hook `register` para conectar inputs con control automático (`type` opcional).
-
 - Usa `getEmptyFields()` para obtener campos vacíos.
-
 - Usa `resetForm()` para reiniciar el estado inicial del formulario.
-
 - Usa `handleSubmitForm()` para enviar el formulario.
-
 - Valida y muestra campos vacíos.
-
 - Muestra los datos capturados con `formData`.
-
 
 ## 📦 API del Hook `react-use-form-lite`
 
