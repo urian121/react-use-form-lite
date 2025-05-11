@@ -1,7 +1,7 @@
 {
   "name": "react-use-form-lite",
   "description": "Hook de formularios para React moderno: rápido, ligero, sin dependencias y compatible con TypeScript. Soporta inputs, selects, checkboxes, radios y archivos con validación simple.",
-  "version": "1.20.0",
+  "version": "1.21.0",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
   "files": [
