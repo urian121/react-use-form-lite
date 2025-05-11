@@ -89,10 +89,11 @@ export default function App() {
   const handleSubmitForm = () => {
     
     // Muestra todos los datos del formulario en consola
-    console.log(`Datos del formulario:, ${formData}`);
+    console.log(`Datos del formulario: ${formData}`);
 
     // Muestra todos los campos vacíos
-    console.log(`Campos vacíos:, ${getEmptyFields()}`);
+    console.log(`Campos vacíos: ${JSON.stringify(getEmptyFields())}`);
+    //console.log(getEmptyFields())
 
     // verificar si el archivo fue cargado
     if (formData.fotoPerfil) {
