@@ -1,138 +1,164 @@
-import { useState } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 
-/**
- * Representa el estado general del formulario.
- */
-type FormState = Record<string, any>;
+// Interfaz para las props que se retornan para el input
+interface RegisteredFieldProps {
+    name: string;
+    value?: string | number | readonly string[] | undefined;
+    onChange: (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => void;
+}
 
-/**
- * Opciones adicionales para el registro de un campo.
- * Permite definir el tipo de input para personalizar los handlers.
- */
-interface RegisterOptions {
-    type?: 'text' | 'select' | 'checkbox' | 'radio' | 'file';
-    value?: string;
+// Interfaz específica para inputs tipo file (sin value)
+interface FileInputProps {
+    name: string;
+    onChange: (
+        event: ChangeEvent<HTMLInputElement>
+    ) => void;
 }
 
 /**
- * Custom hook para manejar formularios en React.
- * @param initialState Estado inicial del formulario.
- */
-export function useFormLite(initialState: FormState = {}) {
-    const [formData, setFormData] = useState<FormState>({ ...initialState });
+ * Hook personalizado para manejo de formularios controlados.
+ * @template T - Tipo de los valores del formulario.
+ * @param initialValues - Valores iniciales del formulario.
+ * @param onSubmitCallback - Función a ejecutar al enviar el formulario.
+ * @returns Métodos y valores para manejar el formulario.
+*/
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function useFormLite<T extends Record<string, any>>(
+    initialValues: T,
+    onSubmitCallback: (values: T) => void
+) {
+    const [values, setValues] = useState<T>(initialValues);
 
     /**
-     * Actualiza un campo del formulario.
-     * @param key Nombre del campo.
-     * @param value Nuevo valor del campo.
+     * Manejador de cambios para inputs, actualiza el estado del formulario.
+     * @param event - Evento de cambio de input, textarea o select.
      */
-    const onChange = (key: string, value: any) => {
-        setFormData((prevState) => ({ ...prevState, [key]: value }));
-    };
+    const handleChange = (
+        event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
+        const target = event.target;
+        const name = target.name;
+        let processedValue: string | number | boolean | Date | null | undefined | File | File[];
 
-    /**
-     * Reinicia el formulario a su estado inicial.
-     */
-    const resetForm = () => setFormData({ ...initialState });
-
-    // Overloads
-    function register(key: string, options: { type: 'checkbox' }): {
-        checked: boolean;
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    };
-    function register(key: string, options: { type: 'select' }): {
-        value: any;
-        onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
-    };
-    function register(key: string, options: { type: 'radio'; value: string }): {
-        name: string;
-        value: string;
-        checked: boolean;
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    };
-    function register(key: string, options: { type: 'file' }): {
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    };
-    function register(key: string, options?: { type?: 'text' }): {
-        value: any;
-        onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    };
-
-    // Implementación real
-    function register(key: string, options: RegisterOptions = {}) {
-        if (options.type === 'checkbox') {
-            const value = options.value;
-            if (value !== undefined) {
-                // Checkbox múltiple (grupo)
-                const currentValues: string[] = formData[key] || [];
-                return {
-                    checked: currentValues.includes(value),
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                        const newValues = e.target.checked
-                            ? [...currentValues, value]
-                            : currentValues.filter((v) => v !== value);
-                        onChange(key, newValues);
-                    },
-                };
-            } else {
-                // Checkbox único (booleano)
-                return {
-                    checked: formData[key] || false,
-                    onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                        onChange(key, e.target.checked),
-                };
-            }
-        }
-
-        if (options.type === 'select') {
-            return {
-                value: formData[key] ?? '',
-                onChange: (e: React.ChangeEvent<HTMLSelectElement>) =>
-                    onChange(key, e.target.value),
-            };
-        }
-
-        if (options.type === 'radio') {
-            return {
-                name: key,
-                value: options.value!,
-                checked: formData[key] === options.value,
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                    onChange(key, e.target.value),
-            };
-        }
-
-        if (options.type === 'file') {
-            return {
-                onChange: (e: React.ChangeEvent<HTMLInputElement>) => {
-                    const files = e.target.files;
-                    if (!files) return;
-
-                    if (e.target.multiple) {
-                        onChange(key, Array.from(files)); // devuelve File[]
+        if (target instanceof HTMLInputElement) {
+            if (target.type === 'checkbox') {
+                if (Array.isArray(values[name])) {
+                    // Checkbox múltiple (array)
+                    const arr = Array.isArray(values[name]) ? [...values[name]] : [];
+                    if (target.checked) {
+                        if (!arr.includes(target.value)) arr.push(target.value);
                     } else {
-                        onChange(key, files[0]); // devuelve un solo File
+                        const idx = arr.indexOf(target.value);
+                        if (idx > -1) arr.splice(idx, 1);
                     }
-                },
-            };
+                    processedValue = arr;
+                } else {
+                    // Checkbox simple (boolean)
+                    processedValue = target.checked;
+                }
+            } else if (target.type === 'number') {
+                processedValue = target.value === '' ? '' : (
+                    !isNaN(target.valueAsNumber) ? target.valueAsNumber : target.value
+                );
+            } else if (target.type === 'date') {
+                processedValue = target.value ? new Date(`${target.value}T00:00:00`) : null;
+            } else if (target.type === 'file') {
+                if (target.multiple) {
+                    processedValue = target.files ? Array.from(target.files) : [];
+                } else {
+                    processedValue = target.files && target.files[0] ? target.files[0] : null;
+                }
+            } else {
+                processedValue = target.value;
+            }
+        } else {
+            processedValue = target.value;
         }
 
+        setValues(prevValues => ({
+            ...prevValues,
+            [name]: processedValue,
+        }));
+    };
+
+    /**
+     * Manejador para el evento submit del formulario.
+     * Ejecuta el callback con los valores actuales.
+     * @param event - Evento de envío del formulario.
+     */
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        onSubmitCallback(values);
+    };
+
+    /**
+     * Restaura los valores del formulario a su estado inicial.
+     */
+    const resetForm = () => {
+        setValues({ ...initialValues });
+    };
+
+    /**
+     * Registra un campo normal del formulario (no file).
+     * @param fieldName - Nombre del campo a registrar.
+     * @returns Props para esparcir en el input correspondiente.
+     */
+    const register = (fieldName: string): RegisteredFieldProps => {
+        let currentValue = values[fieldName] ?? initialValues[fieldName] ?? '';
+
+        if (currentValue === undefined) {
+            currentValue = initialValues[fieldName];
+        }
+
+        let displayValue: string | number | readonly string[] | undefined;
+
+        if (isValidDate(currentValue)) {
+            // Formatea a string YYYY-MM-DD
+            const year = currentValue.getFullYear();
+            const month = (currentValue.getMonth() + 1).toString().padStart(2, '0');
+            const day = currentValue.getDate().toString().padStart(2, '0');
+            displayValue = `${year}-${month}-${day}`;
+        } else if (currentValue === null || currentValue === undefined) {
+            displayValue = '';
+        } else {
+            displayValue = currentValue;
+        }
 
         return {
-            value: formData[key] ?? '',
-            onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
-                onChange(key, e.target.value),
+            name: fieldName,
+            value: displayValue,
+            onChange: handleChange,
         };
-    }
+    };
 
     /**
-     * Obtiene los campos vacíos del formulario.
-     * Retorna un objeto con claves y mensajes de error.
+     * Registra un campo tipo file (sin value prop).
+     * @param fieldName - Nombre del campo a registrar.
+     * @returns Props para esparcir en el input correspondiente.
+     */
+    const registerFile = (fieldName: string): FileInputProps => {
+        return {
+            name: fieldName,
+            onChange: handleChange
+        };
+    };
+
+    /**
+     * Retorna un objeto con los campos vacíos del formulario, con un mensaje por cada campo vacío.
+     * @returns Objeto con los nombres de los campos vacíos y un mensaje.
      */
     const getEmptyFields = () => {
         const emptyFields: Record<string, string> = {};
-        for (const key in formData) {
-            if (formData[key] === '' || formData[key] === null || formData[key] === undefined) {
+        for (const key in values) {
+            if (
+                values[key] === '' ||
+                values[key] === null ||
+                values[key] === undefined ||
+                (Array.isArray(values[key]) && values[key].length === 0)
+            ) {
                 emptyFields[key] = 'Este campo está vacío';
             }
         }
@@ -140,9 +166,20 @@ export function useFormLite(initialState: FormState = {}) {
     };
 
     return {
-        formData,
+        values,
+        handleSubmit,
         resetForm,
         register,
+        registerFile,
         getEmptyFields,
     };
+}
+
+/**
+ * Verifica si un valor es una instancia válida de Date.
+ * @param value - Valor a verificar.
+ * @returns True si es una fecha válida, false en caso contrario.
+ */
+function isValidDate(value: unknown): value is Date {
+    return value instanceof Date && !isNaN(value.getTime());
 }
