@@ -10,7 +10,6 @@ Permite una implementación rápida y sin complicaciones, con soporte para múlt
 
 ![Vista previa](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/react-use-form-lite.gif)
 
-- [Ver Código de Ejemplo en GitHub](https://github.com/urian121/app-with-react-use-form-lite)
 
 - Ejemplo de uso con [React Use Form Lite sin TypeScript](https://github.com/urian121/form-with-react-use-form-lite-without-typescript)
 
