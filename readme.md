@@ -6,6 +6,7 @@
 [![npm](https://img.shields.io/npm/dt/react-use-form-lite.svg)](https://www.npmjs.com/package/react-use-form-lite)
 
 **`react-use-form-lite`** es una librería moderna, intuitiva, liviana, escalable y sobre todo flexible para manejar formularios en **React** sin dependencias adicionales.
+
 Permite una implementación rápida y sin complicaciones, con soporte para múltiples tipos de input (`text`,`hidden`, `number`, `email`, `password`, `textarea`, `date`, `time`, `datetime-local`, `month`, `week`, `range`, `color`, `search`, `tel`, `url`, `select`, `radio`, `checkbox` (simple y múltiple), y `file` (simple y múltiple)).
 
 ![Vista previa](https://raw.githubusercontent.com/urian121/imagenes-proyectos-github/refs/heads/master/react-use-form-lite.gif)
@@ -33,10 +34,10 @@ El hook **`useFormLite`** simplifica el manejo de formularios permitiendo escrib
 ## ⚡ ¿Qué Necesidad Resuelve?
 
 - Manejo centralizado de los valores del formulario.
-- Inputs conectados automáticamente con value (o **`checked`** para checkboxes/radios) y **`onChange`**.
+- Inputs conectados automáticamente.
 - Manejo diferenciado y simplificado para inputs de tipo **`file`**, con **`registerFile`**.
-- Soporte para inputs de fecha y hora, números, y otros tipos de inputs.
-- Gestión de **checkboxes simple** y múltiples que actualizan un array de valores.
+- Soporte para la mayoria de los inputs.
+- Gestión de **checkboxes simple** y múltiples.
 - Identificación de campos vacíos con **`getEmptyFields()`**.
 - Reseteo fácil del formulario a sus valores iniciales con **`resetForm()`**.
 
@@ -178,16 +179,32 @@ export default function MiFormulario() {
         </button>
       </div>
 
-      <pre style={{ marginTop: '20px', background: '#f0f0f0', padding: '10px' }}>
-        Valores del formulario:
-        {JSON.stringify(values, (key, value) => {
-          if (value instanceof File) return { name: value.name, size: value.size, type: value.type };
-          if (Array.isArray(value) && value.every(item => item instanceof File)) {
-            return value.map(file => ({ name: file.name, size: file.size, type: file.type }));
-          }
-          return value;
-        }, 2)}
-      </pre>
+        <pre style={{ marginTop: "20px", background: "#f0f0f0", padding: "10px" }}>
+          {JSON.stringify({
+              informacionFormulario: {
+                ...values,
+                avatar:
+                  values.avatar && typeof values.avatar !== "string"
+                    ? {
+                        name: values.avatar.name,
+                        size: values.avatar.size,
+                        type: values.avatar.type,
+                      }
+                    : values.avatar || null,
+                documentos:
+                  values.documentos.length > 0
+                    ? values.documentos.map((file) => ({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                      }))
+                    : [],
+              },
+              camposVacios: getEmptyFields(),
+            },
+            null,
+            2)}
+        </pre>
     </form>
   );
 }
